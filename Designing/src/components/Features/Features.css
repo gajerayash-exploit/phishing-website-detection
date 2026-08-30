@@ -1,0 +1,114 @@
+.features-section {
+  padding: var(--space-24) 0;
+  background: var(--bg-primary);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  transition: box-shadow var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-500), var(--primary-300));
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+/* No `transform` here. Framer Motion's whileHover writes an inline transform,
+   which outranks any stylesheet rule — a CSS hover lift was cancelled the
+   moment the scroll-in animation ran. Shadow and border are safe to keep in CSS
+   because Motion never touches them. */
+.feature-card:hover {
+  box-shadow: var(--shadow-xl);
+  border-color: var(--border-hover);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+  /* `font-size: 20px` removed — the child is an SVG sized by its `size` prop,
+     so it styled nothing. */
+}
+
+/* All four now resolve through tokens with dark-theme variants, instead of the
+   literal hexes that froze these icons across both themes. Two of them
+   (#22c55e, #f59e0b) were exact duplicates of --risk-safe and
+   --risk-suspicious written out by hand. */
+.feature-icon-purple {
+  background: var(--viz-indigo-soft);
+  color: var(--viz-indigo);
+}
+
+.feature-icon-blue {
+  background: var(--viz-blue-soft);
+  color: var(--viz-blue);
+}
+
+.feature-icon-green {
+  background: var(--viz-green-soft);
+  color: var(--viz-green);
+}
+
+.feature-icon-amber {
+  background: var(--viz-amber-soft);
+  color: var(--viz-amber);
+}
+
+.feature-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-3);
+  color: var(--text-primary);
+}
+
+.feature-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  text-wrap: pretty;
+}
+
+@media (max-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-card {
+    padding: var(--space-6);
+  }
+}

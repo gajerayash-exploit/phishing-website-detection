@@ -1,0 +1,42 @@
+.back-to-top {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  /* Stays on --z-dropdown, which now sits below --z-overlay/--z-drawer used by
+     the mobile menu and sidebar drawer. Previously both were 50, and because
+     BackToTop mounts later in the tree it painted on top of the open menu. */
+  z-index: var(--z-dropdown);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.back-to-top:hover {
+  background: var(--primary-600);
+  color: white;
+  border-color: var(--primary-600);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Touch pointers get the 44px minimum target; the 40px button is fine for a
+   mouse but undersized for a thumb. */
+@media (pointer: coarse) {
+  .back-to-top {
+    width: 44px;
+    height: 44px;
+    bottom: var(--space-5);
+    right: var(--space-5);
+  }
+}

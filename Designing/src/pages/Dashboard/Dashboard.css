@@ -1,0 +1,278 @@
+.dashboard-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* .dashboard-loading and .span-2 moved to DashboardLayout.css — Analytics,
+   ModelInsights and History all used them without importing this file, so they
+   worked only because Dashboard is eagerly imported. */
+
+/* Replaces `style={{ marginBottom: 'var(--space-8)' }}` repeated in the JSX. */
+.dashboard-kpi-row,
+.dashboard-charts-row {
+  margin-bottom: var(--space-8);
+}
+
+/* Takes the space the legend doesn't need, so ResponsiveContainer's height:100%
+   has a definite box to resolve against. */
+.donut-chart-area {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: 0 var(--space-4);
+  flex-shrink: 0;
+}
+
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.donut-legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.donut-legend-label {
+  color: var(--text-secondary);
+}
+
+.donut-legend-value {
+  margin-left: auto;
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* System Health Badge
+   Scoped with a modifier. As a bare `.dashboard-page-header { display: flex }`
+   this leaked to every other dashboard page — Analytics, ModelInsights,
+   BulkScanner, History and Settings all render the <h1> and <p> as direct
+   children with no wrapper, so they became flex siblings pushed to opposite
+   ends of the row instead of stacking. Only Dashboard wraps its heading in a
+   div for the badge to sit beside, so only Dashboard opts in. */
+.dashboard-page-header--split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.system-health-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+}
+
+.system-health-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--risk-safe);
+}
+
+.system-health-indicator.pulse {
+  box-shadow: 0 0 0 0 var(--risk-safe-ring);
+  animation: pulse-green 2s infinite;
+}
+
+/* Custom properties resolve on the element, so the ring colour follows the
+   theme even inside @keyframes. These stops previously hardcoded the light-mode
+   green, which was slightly off-hue against the dark palette. */
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 var(--risk-safe-ring); }
+  70% { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.system-health-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.system-health-status {
+  font-size: 11px;
+  font-weight: var(--font-bold);
+  color: var(--risk-safe);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.system-health-latency {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+/* Quick Actions Panel */
+.dashboard-bottom-row {
+  margin-top: var(--space-8);
+}
+
+.quick-actions-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* slideUp is already defined in index.css; the local duplicate has been
+     removed. */
+  animation: slideUp 0.5s var(--ease-out) both;
+  animation-delay: 0.7s;
+}
+
+.quick-actions-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.quick-actions-subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.quick-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+}
+
+.quick-action-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-hover);
+  transform: translateX(4px);
+}
+
+.quick-action-btn.primary {
+  background: var(--viz-indigo-soft);
+  border-color: var(--primary-200);
+}
+
+[data-theme='dark'] .quick-action-btn.primary {
+  border-color: var(--primary-800);
+}
+
+.quick-action-btn.primary:hover {
+  border-color: var(--primary-400);
+}
+
+.quick-action-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--viz-indigo-soft);
+  color: var(--viz-indigo);
+  flex-shrink: 0;
+}
+
+/* Modifier classes rather than per-element inline styles, so these follow the
+   theme like every other accent in the app. */
+.quick-action-icon.blue {
+  background: var(--viz-blue-soft);
+  color: var(--viz-blue);
+}
+
+.quick-action-icon.green {
+  background: var(--viz-green-soft);
+  color: var(--risk-safe);
+}
+
+.quick-action-icon.neutral {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.quick-action-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevent text overflow */
+}
+
+.quick-action-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quick-action-desc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quick-action-arrow {
+  color: var(--text-tertiary);
+  transition: transform var(--duration-fast), color var(--duration-fast);
+}
+
+.quick-action-btn:hover .quick-action-arrow {
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+@media (max-width: 1024px) {
+  .dashboard-charts-row.grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-bottom-row.grid-3 {
+    grid-template-columns: 1fr;
+  }
+  /* .span-2's collapse now lives in DashboardLayout.css alongside its
+     definition, rather than being restated here. */
+}
+
+@media (max-width: 640px) {
+  .dashboard-page-header--split {
+    flex-direction: column;
+  }
+  .system-health-badge {
+    width: 100%;
+    justify-content: center;
+  }
+}

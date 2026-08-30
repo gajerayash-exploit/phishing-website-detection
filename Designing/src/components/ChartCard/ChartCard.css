@@ -1,0 +1,179 @@
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-normal) var(--ease-out);
+  /* A `1fr` grid track floors at the item's min-content width, and Recharts
+     stamps an explicit pixel width onto its SVG after measuring. Without this
+     the card could grow on resize but never shrink back, overflowing the page. */
+  min-width: 0;
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.chart-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.chart-card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.chart-card-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.chart-card-subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.chart-filters {
+  display: flex;
+  background: var(--bg-secondary);
+  padding: 2px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-primary);
+  flex-shrink: 0;
+}
+
+.chart-filter-btn {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.chart-filter-btn:hover {
+  color: var(--text-primary);
+}
+
+/* --bg-selected, not --bg-card. Against --bg-secondary the two are #f8fafc vs
+   #ffffff in light (subtle but visible) and #111827 vs #151c2c in dark — a ~4
+   unit luminance difference, with a *dark* shadow on a dark background adding
+   no separation. The selected time range was effectively invisible in dark
+   mode. --bg-selected is defined per theme to stay legible in both. */
+.chart-filter-btn.active {
+  background: var(--bg-selected);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  font-weight: var(--font-semibold);
+}
+
+/* height, not min-height. Recharts' `height="100%"` resolves against the
+   parent's *height*; with only min-height set the parent computes `auto`, so
+   the container reported 0 on first measure and the chart flashed collapsed
+   until the ResizeObserver rescued it. */
+.chart-container {
+  flex: 1;
+  height: 300px;
+  min-height: 300px;
+  width: 100%;
+  min-width: 0;
+  /* Charts that also render a legend below the plot area (e.g. the donut) need
+     the two to share the box rather than the chart claiming all of it. */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Recharts' ResponsiveContainer renders its own div. As a flex child it needs to
+   be told to fill the remaining space, otherwise `height="100%"` resolves
+   against an auto-height flex item and the chart measures 0 on first paint. */
+.chart-container > .recharts-responsive-container {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Recharts Custom Tooltip */
+.custom-tooltip {
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-lg);
+}
+
+.custom-tooltip-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.custom-tooltip-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+}
+
+.custom-tooltip-item:last-child {
+  margin-bottom: 0;
+}
+
+.custom-tooltip-color {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  /* Otherwise a long series name squashes the swatch to nothing. */
+  flex-shrink: 0;
+}
+
+.custom-tooltip-name {
+  color: var(--text-primary);
+}
+
+/* Secondary line inside a tooltip (e.g. a category label). Replaces an inline
+   style in ModelInsights. */
+.custom-tooltip-meta {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-primary);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.custom-tooltip-value {
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .chart-card {
+    padding: var(--space-4);
+  }
+
+  /* 300px of chart plus a header eats most of a phone screen. */
+  .chart-container {
+    height: 240px;
+    min-height: 240px;
+  }
+
+  .chart-card-header {
+    margin-bottom: var(--space-4);
+  }
+}

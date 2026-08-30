@@ -1,0 +1,65 @@
+/* Warning-coloured, using the existing risk tokens so it themes with everything
+   else rather than introducing a new palette. */
+.demo-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  background: var(--risk-suspicious-bg);
+  border: 1px solid var(--risk-suspicious);
+  border-radius: var(--radius-lg);
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.demo-banner-icon {
+  color: var(--risk-suspicious);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.demo-banner-body {
+  min-width: 0;
+}
+
+.demo-banner-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.demo-banner-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  text-wrap: pretty;
+}
+
+.demo-banner-text code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  padding: 1px var(--space-1);
+  white-space: nowrap;
+}
+
+/* On the dashboard the banner sits in a full-width column, so it shouldn't be
+   centred at 720px like it is on the Scanner page. */
+.dashboard-content .demo-banner {
+  max-width: none;
+  margin-inline: 0;
+}
+
+@media (max-width: 768px) {
+  .demo-banner {
+    margin-inline: var(--space-4);
+  }
+
+  .dashboard-content .demo-banner {
+    margin-inline: 0;
+  }
+}

@@ -1,0 +1,450 @@
+.settings-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.settings-container {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+  align-items: flex-start;
+}
+
+.settings-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--bg-card);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-weight: var(--font-medium);
+  transition: all var(--duration-fast);
+  text-align: left;
+}
+
+.settings-tab:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.settings-tab.active {
+  background: var(--primary-50);
+  color: var(--primary-600);
+}
+
+[data-theme='dark'] .settings-tab.active {
+  background: var(--viz-indigo-soft);
+  color: var(--primary-400);
+}
+
+.settings-content {
+  flex: 1;
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-primary);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+/* Was applied to all four tab panels with no rule anywhere. */
+.settings-section {
+  display: block;
+}
+
+.settings-section-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.settings-section-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.settings-group {
+  margin-bottom: var(--space-8);
+}
+
+.settings-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+/* Replaces an inline-styled flex div with a magic 8px margin, and lets the
+   label drop its own bottom margin without an inline override. */
+.settings-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  max-width: 400px;
+  margin-bottom: var(--space-2);
+}
+
+.settings-label-row .settings-label {
+  margin-bottom: 0;
+}
+
+/* Had no rule at all, so the threshold readout rendered as unstyled 16px body
+   text beside a 14px semibold label. */
+.settings-value {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--primary-600);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-theme='dark'] .settings-value {
+  color: var(--primary-400);
+}
+
+.settings-input {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--viz-indigo-soft);
+}
+
+/* When .select-field and .settings-input are combined, keep room for the
+   chevron that .select-field draws on the right. */
+.select-field.settings-input {
+  padding-right: var(--space-10);
+}
+
+/* Theme Options */
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-4);
+  max-width: 500px;
+}
+
+.theme-option-card {
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-weight: var(--font-medium);
+  transition: all var(--duration-fast);
+}
+
+.theme-option-card:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.theme-option-card.active {
+  border-color: var(--primary-500);
+  color: var(--primary-600);
+  background: var(--viz-indigo-soft);
+}
+
+[data-theme='dark'] .theme-option-card.active {
+  color: var(--primary-400);
+}
+
+/* Had no rule, so the Sun/Moon/Monitor glyphs got no treatment of their own.
+   Inheriting the card's colour is right; the muted-until-selected step is what
+   was missing. */
+.theme-option-icon {
+  color: var(--text-tertiary);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.theme-option-card:hover .theme-option-icon {
+  color: var(--text-secondary);
+}
+
+.theme-option-card.active .theme-option-icon {
+  color: currentColor;
+}
+
+/* Toggle Switch */
+.settings-toggle-group {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.settings-toggle-group:last-of-type {
+  border-bottom: none;
+}
+
+/* Had no rule. As a flex child with no flex:1 it sized to content and pressed
+   against the 44px switch; only .settings-toggle-desc's max-width was
+   accidentally containing the longer description. */
+.settings-toggle-info {
+  flex: 1;
+  min-width: 0;
+  padding-right: var(--space-6);
+}
+
+.settings-toggle-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.settings-toggle-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-primary);
+  transition: .3s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  /* The one literal colour in this file. The knob reads as white on both the
+     off (grey) and on (indigo) track, so it is intentional rather than a
+     missed token — named explicitly for clarity. */
+  background-color: #ffffff;
+  transition: transform var(--duration-normal) var(--ease-out);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Scoped under .toggle-switch. These were bare `input:checked + .toggle-slider`
+   selectors, which would style any input followed by a .toggle-slider sibling
+   anywhere in the app. */
+.toggle-switch input:checked + .toggle-slider {
+  background-color: var(--primary-600);
+}
+
+.toggle-switch input:focus-visible + .toggle-slider {
+  box-shadow: 0 0 0 3px var(--viz-indigo-soft);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* Range Input */
+.settings-range {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  max-width: 400px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-600);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  border: none;
+  transition: transform var(--duration-fast);
+}
+
+.settings-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Firefox equivalents. Without these, and without the unprefixed
+   `appearance: none` above, Firefox drew its default OS slider on top of the
+   custom 6px track — a visible double-track artifact. */
+.settings-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-600);
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-range::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+}
+
+.settings-range:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 4px;
+}
+
+.settings-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+}
+
+/* API Status Card */
+.api-status-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-8);
+  border: 1px solid var(--border-primary);
+}
+
+.api-status-card.connected {
+  background: var(--risk-safe-bg);
+  border-color: var(--risk-safe);
+}
+
+.api-status-icon {
+  color: var(--risk-safe);
+  display: flex;
+  flex-shrink: 0;
+}
+
+.api-status-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.api-status-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.settings-actions {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .settings-container {
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .settings-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    /* Contains the horizontal scroll so it doesn't chain to the page. */
+    overscroll-behavior-x: contain;
+  }
+  .settings-tab {
+    white-space: nowrap;
+    /* Flex items default to flex-shrink:1, so the four tabs compressed below
+       their text width and clipped instead of ever triggering the scroll. */
+    flex-shrink: 0;
+  }
+  .settings-content {
+    width: 100%;
+    padding: var(--space-6);
+  }
+  .settings-section-desc {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+  }
+  .settings-toggle-group {
+    /* Stacked, so the description isn't squeezed into a narrow column beside
+       the switch on a phone. */
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .settings-toggle-info {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-content {
+    padding: var(--space-5) var(--space-4);
+  }
+  .theme-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+  .theme-option-card {
+    padding: var(--space-4) var(--space-2);
+    font-size: var(--text-xs);
+  }
+  .settings-actions .btn {
+    width: 100%;
+  }
+}

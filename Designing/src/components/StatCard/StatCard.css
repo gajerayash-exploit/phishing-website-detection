@@ -1,0 +1,116 @@
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.stat-card-title {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-medium);
+}
+
+.stat-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* All four resolve through tokens with dark-theme variants. `.blue` was the odd
+   one out, hardcoding #3b82f6 so it never adapted. */
+.stat-card-icon.purple { background: var(--viz-indigo-soft); color: var(--viz-indigo); }
+.stat-card-icon.green { background: var(--viz-green-soft); color: var(--risk-safe); }
+.stat-card-icon.red { background: var(--risk-danger-bg); color: var(--risk-danger); }
+.stat-card-icon.blue { background: var(--viz-blue-soft); color: var(--viz-blue); }
+
+.stat-card-value-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.stat-card-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Widened from 80px. Twelve datapoints across 80px gave ~6.7px per point with a
+   2px stroke — the trend was unreadable, and 0.8 opacity dimmed it further. */
+.stat-card-sparkline {
+  width: 96px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.stat-card-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.stat-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-change.positive { color: var(--risk-safe); }
+.stat-change.negative { color: var(--risk-danger); }
+.stat-change.neutral { color: var(--text-secondary); }
+
+.stat-period {
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 640px) {
+  .stat-card {
+    padding: var(--space-5);
+  }
+  .stat-card-value {
+    font-size: var(--text-2xl);
+  }
+  /* The value needs the room more than the sparkline does. */
+  .stat-card-sparkline {
+    display: none;
+  }
+}

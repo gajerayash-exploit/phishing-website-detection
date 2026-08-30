@@ -1,0 +1,36 @@
+/* ============================================
+   App Shell
+   ============================================
+
+   This file previously held leftover Vite starter markup styles (.counter,
+   #next-steps, #docs, #spacer, .ticks) and was imported by nothing. It also
+   declared its own `.hero { position: relative }` with nested children — a
+   collision waiting to happen with Hero.css the moment anyone imported it —
+   and referenced seven custom properties that do not exist in the design
+   system (--accent, --accent-bg, --accent-border, --border, --text-h,
+   --social-bg, --shadow).
+
+   It now carries the shell rules that were genuinely missing: `.app-container`
+   and `.home-page` were both applied in JSX with no matching rule anywhere. */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg-primary);
+}
+
+/* Grows to fill the viewport so the footer is pinned to the bottom on short
+   pages instead of floating mid-screen. */
+.app-main {
+  flex: 1 0 auto;
+  /* Prevents long unbreakable content (URLs, tables) from widening the shell
+     and triggering the body-level horizontal clip. */
+  min-width: 0;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+}

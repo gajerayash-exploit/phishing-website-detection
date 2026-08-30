@@ -1,0 +1,226 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-24) 0 var(--space-20);
+  background: var(--bg-hero);
+  /* Subtracts the navbar it sits below. At 85vh flat, hero + navbar exceeded
+     the viewport on short laptop screens and pushed the CTAs under the fold. */
+  min-height: calc(85vh - var(--navbar-height));
+  display: flex;
+  align-items: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+}
+
+.hero-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--primary-300), transparent 70%);
+  top: -10%;
+  right: -5%;
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Orb hues now resolve through --viz-* tokens, which have dark-theme variants.
+   Previously two of the three were literal rgba() values, so only their opacity
+   responded to the theme while the hue stayed fixed. Intensity is still
+   controlled by the shared .hero-gradient-orb opacity + blur. */
+.hero-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--viz-purple), transparent 70%);
+  bottom: -10%;
+  left: -5%;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.hero-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--viz-blue), transparent 70%);
+  top: 40%;
+  left: 40%;
+  animation: float 12s ease-in-out infinite;
+}
+
+[data-theme='dark'] .hero-gradient-orb {
+  opacity: 0.22;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(var(--border-primary) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--border-primary) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+  opacity: 1;
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--bg-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--primary-600);
+  margin-bottom: var(--space-8);
+}
+
+[data-theme='dark'] .hero-badge {
+  color: var(--primary-400);
+}
+
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: var(--font-extrabold);
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.03em;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Mid-stop is a token, not the literal #7c3aed / #a78bfa that bypassed the
+   design system in both themes. */
+.hero-title-gradient {
+  background: linear-gradient(135deg, var(--primary-600), var(--viz-purple), var(--primary-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme='dark'] .hero-title-gradient {
+  background: linear-gradient(135deg, var(--primary-400), var(--viz-purple), var(--primary-300));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: var(--text-xl);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 680px;
+  margin: 0 auto var(--space-4);
+}
+
+.hero-description {
+  font-size: var(--text-base);
+  color: var(--text-tertiary);
+  max-width: 600px;
+  margin: 0 auto var(--space-10);
+  line-height: var(--leading-relaxed);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* A grid rather than a flex row, so the four stats break to a clean 2x2 instead
+   of wrapping into a ragged 3+1 with one orphan on the second line. */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-16);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--border-primary);
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+  /* Keeps the four figures optically aligned despite differing digit widths. */
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin-top: var(--space-1);
+  text-wrap: balance;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-16) 0 var(--space-16);
+    min-height: auto;
+  }
+  .hero-subtitle {
+    font-size: var(--text-lg);
+  }
+  .hero-stats {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    gap: var(--space-6);
+  }
+  .hero-orb-1,
+  .hero-orb-2,
+  .hero-orb-3 {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+  }
+  .hero-stat-value {
+    font-size: var(--text-2xl);
+  }
+  /* Full-width stacked CTAs — two side-by-side buttons at --space-4 gap don't
+     fit a 320px viewport. */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

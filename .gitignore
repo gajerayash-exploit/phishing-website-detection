@@ -1,0 +1,8 @@
+﻿data/X_train_scaled.csv
+data/X_test_scaled.csv
+data/dataset_full.csv
+data/cleaned_phishing_dataset.csv
+backend/__pycache__/
+.venv/
+node_modules/
+.env

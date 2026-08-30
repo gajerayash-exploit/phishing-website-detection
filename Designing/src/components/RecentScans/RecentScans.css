@@ -1,0 +1,38 @@
+/* Table primitives (.table-responsive, .data-table, .cell-*, .btn-view) moved to
+   index.css. History and BulkScanner both used them without importing this
+   file, so their tables were styled only as a side effect of Dashboard being
+   eagerly imported — code-splitting any route would have stripped them bare. */
+
+.recent-scans-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.recent-scans-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.recent-scans-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .recent-scans-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+}

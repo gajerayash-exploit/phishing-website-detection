@@ -1,0 +1,153 @@
+.analytics-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.analytics-grid {
+  display: grid;
+  /* minmax(0, 1fr) so a measured Recharts SVG can't set a min-content floor the
+     track is unable to shrink back below. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+.analytics-full-width {
+  grid-column: 1 / -1;
+}
+
+/* The full-width trend chart earns more vertical room than the two half-width
+   charts beside it. Set on the container rather than as a fixed height on
+   ResponsiveContainer, which overflowed its parent box. */
+.analytics-full-width .chart-container {
+  height: 340px;
+  min-height: 340px;
+}
+
+@media (max-width: 1024px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .analytics-full-width .chart-container {
+    height: 260px;
+    min-height: 260px;
+  }
+}
+
+/* ============================================
+   PDF Export Mode Styles
+   Triggered when body has the `.pdf-mode` class
+   ============================================ */
+
+/* ---------- Report Header (hidden on screen, visible in PDF) ---------- */
+.pdf-report-header {
+  display: none;
+}
+
+.pdf-mode .pdf-report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  border-radius: var(--radius-lg, 12px);
+  color: #ffffff;
+}
+
+.pdf-report-header .pdf-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pdf-report-header .pdf-logo-shield {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.pdf-report-header .pdf-logo h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.pdf-report-header .pdf-meta {
+  text-align: right;
+}
+
+.pdf-report-header .pdf-meta h3 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.pdf-report-header .pdf-meta p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Hide interactive / shell UI during PDF capture ---------- */
+.pdf-mode .sidebar,
+.pdf-mode .sidebar-backdrop,
+.pdf-mode .navbar,
+.pdf-mode .back-to-top,
+.pdf-mode .no-print {
+  display: none !important;
+}
+
+/* Remove sidebar offset so content fills the full width */
+.pdf-mode .dashboard-layout {
+  margin-left: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ---------- Layout overrides for a clean, full-width report ---------- */
+.pdf-mode .analytics-page {
+  max-width: none;
+  padding: 16px;
+}
+
+.pdf-mode .analytics-grid {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Ensure charts have enough height in the single-column layout */
+.pdf-mode .chart-container {
+  height: 320px !important;
+  min-height: 320px !important;
+}
+
+.pdf-mode .analytics-full-width .chart-container {
+  height: 360px !important;
+  min-height: 360px !important;
+}
+
+/* Remove decorative shadows and borders for crispness */
+.pdf-mode .chart-card {
+  box-shadow: none;
+  border: 1px solid var(--border-primary, #e2e8f0);
+}
+
+/* Make sure Recharts containers are fully visible */
+.pdf-mode .recharts-wrapper {
+  overflow: visible !important;
+}
+
+/* Reset any entrance animations so everything is visible instantly */
+.pdf-mode [style*="opacity"] {
+  opacity: 1 !important;
+  transform: none !important;
+}

@@ -1,0 +1,207 @@
+/* ============================================
+   Sidebar — three modes from one component
+   ============================================
+   ≥1025px  Full rail, 260px, labels visible, offsets content.
+   ≤1024px  Icon rail, 72px, labels visually hidden but still announced.
+   ≤768px   Drawer: overlays content, slides in from the left, backdrop.
+
+   Width comes from --sidebar-width, the same token DashboardLayout uses for its
+   offset, so the two can no longer drift. Previously each file re-declared
+   72px in its own media query while the token itself claimed 0px. */
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--navbar-height));
+  height: calc(100dvh - var(--navbar-height));
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  /* Tokenised. Was a magic 40, which sat below every z-index token and let
+     page-level dropdowns paint over the rail. */
+  z-index: var(--z-sidebar);
+  transition: width var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sidebar-nav {
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  position: relative;
+  transition: color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+
+.sidebar-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.sidebar-link.active {
+  background: var(--viz-indigo-soft);
+  color: var(--primary-600);
+}
+
+/* A 3px marker on the active item, so the current section is still readable in
+   rail mode where the label is hidden. */
+.sidebar-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 0 var(--radius-full) var(--radius-full) 0;
+  background: var(--primary-600);
+}
+
+[data-theme='dark'] .sidebar-link.active {
+  color: var(--primary-400);
+}
+
+[data-theme='dark'] .sidebar-link.active::before {
+  background: var(--primary-400);
+}
+
+.sidebar-icon {
+  flex-shrink: 0;
+}
+
+.sidebar-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-section-title {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-4) var(--space-3) var(--space-2);
+  margin: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: var(--space-5) var(--space-4);
+  border-top: 1px solid var(--border-primary);
+}
+
+.sidebar-version {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ---------- Backdrop (drawer mode only) ---------- */
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ---------- Rail mode ---------- */
+@media (max-width: 1024px) {
+  /* :not(.is-open) so that when the drawer is pulled open on a phone the full
+     labels come back. */
+  .sidebar:not(.is-open) .sidebar-link {
+    justify-content: center;
+    padding: var(--space-3);
+  }
+
+  /* Visually hidden rather than display:none. `display: none` removes text from
+     the accessibility tree, which left every rail link announced as an
+     unlabelled link with only a decorative SVG inside. */
+  .sidebar:not(.is-open) .sidebar-label,
+  .sidebar:not(.is-open) .sidebar-section-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* With the group headings hidden, a hairline keeps the grouping visible. */
+  .sidebar:not(.is-open) .sidebar-section + .sidebar-section {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-secondary);
+  }
+}
+
+/* ---------- Drawer mode ---------- */
+@media (max-width: 768px) {
+  .sidebar {
+    /* Fixed drawer width, independent of --sidebar-width (which is 0 here
+       because the shell no longer reserves space for the rail). */
+    width: 264px;
+    max-width: 84vw;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-2xl);
+    border-right: 1px solid var(--border-primary);
+    z-index: var(--z-drawer);
+    /* visibility flips only after the slide-out finishes, so the exit
+       animation is visible but the closed panel is not focusable. */
+    visibility: hidden;
+    transition: transform var(--duration-normal) var(--ease-out),
+                visibility 0s linear var(--duration-normal);
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--duration-normal) var(--ease-out),
+                visibility 0s linear 0s;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: var(--navbar-height) 0 0 0;
+    background: var(--bg-overlay);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: var(--z-overlay);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--duration-normal) var(--ease-out),
+                visibility 0s linear var(--duration-normal);
+  }
+
+  .sidebar-backdrop.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--duration-normal) var(--ease-out),
+                visibility 0s linear 0s;
+  }
+}

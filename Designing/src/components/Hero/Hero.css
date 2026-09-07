@@ -135,11 +135,11 @@
 }
 
 .hero-subtitle {
-  font-size: var(--text-xl);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-relaxed);
   max-width: 680px;
-  margin: 0 auto var(--space-4);
+  margin: 0 auto var(--space-6);
 }
 
 .hero-description {
@@ -195,7 +195,7 @@
     min-height: auto;
   }
   .hero-subtitle {
-    font-size: var(--text-lg);
+    font-size: var(--text-sm);
   }
   .hero-stats {
     margin-top: var(--space-12);

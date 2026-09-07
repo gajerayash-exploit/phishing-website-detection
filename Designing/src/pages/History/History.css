@@ -149,6 +149,14 @@
 }
 
 @media (max-width: 640px) {
+  .history-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .history-export-btn {
+    width: 100%;
+    justify-content: center;
+  }
   .history-controls {
     flex-direction: column;
     padding: var(--space-4);

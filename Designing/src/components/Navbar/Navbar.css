@@ -249,6 +249,10 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    background: var(--bg-card);
+  }
+
   .navbar-nav {
     display: none;
   }

@@ -66,18 +66,9 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          AI-powered website risk analysis that uses Machine Learning to identify
-          phishing and legitimate websites.
-        </motion.p>
-
-        <motion.p
-          className="hero-description"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          Analyze suspicious URLs, understand their risk factors, and get an
-          intelligent prediction powered by a trained Machine Learning model.
+          Analyze suspicious URLs, understand their risk factors, and get
+          intelligent predictions powered by trained Machine Learning models
+          to identify phishing and legitimate websites.
         </motion.p>
 
         <motion.div

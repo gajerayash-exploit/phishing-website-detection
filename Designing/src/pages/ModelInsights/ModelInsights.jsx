@@ -100,11 +100,11 @@ const ModelInsights = () => {
               </div>
               {model.selected ? (
                 <span className="model-badge selected">
-                  <CheckCircle2 size={14} aria-hidden="true" /> Selected model
+                  <CheckCircle2 size={12} aria-hidden="true" /> Selected
                 </span>
               ) : (
                 <span className="model-badge">
-                  <Circle size={14} aria-hidden="true" /> Evaluated
+                  <Circle size={12} aria-hidden="true" /> Evaluated
                 </span>
               )}
             </div>
